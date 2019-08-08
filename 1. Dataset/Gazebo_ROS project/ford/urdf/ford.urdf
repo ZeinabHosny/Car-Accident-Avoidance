@@ -1,0 +1,369 @@
+<?xml version='1.0'?>
+<robot name="ford">
+
+<!-- Base Link -->
+<!-- --------- -->
+
+  <link name="base_link">
+    <collision>
+         <origin xyz="0 0 1.0639" rpy="0 0 0"/>  
+           <geometry>
+            <box size="2.62 1.301 1.447"/>
+        </geometry>
+      </collision>
+     <visual>
+        <origin xyz="-0.25 0 1.0639" rpy="0 0 0"/>  
+        <geometry>
+          <mesh filename="package://ford/meshes/ford_escape_no_wheels_2.dae"/>
+        </geometry>
+     </visual>
+  </link>
+
+  <joint name="inertial_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="main_mass"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="main_mass" type="fixed">
+     <parent link="inertial_joint"/>
+     <inertial>
+        <origin xyz="0 0 1.447" rpy="0 0 0"/>
+        <mass value="2050"/>
+        <inertia
+          ixx="63"  ixy="0.000000" ixz="-31"
+          iyy="1048" iyz="0.000000"
+          izz="1111"/>
+      </inertial>
+  </link>
+
+
+<!-- Back Right Wheel -->
+<!-- ---------------- -->
+
+  <joint name="back_right_wheel_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="back_right_wheel_link"/>
+      <origin xyz="-1.31 -0.765 0.66" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <dynamics damping="0.1"/>
+     <limit effort="10000" velocity="100" />
+      <joint_properties damping="0.0" friction="0.0" />
+  </joint>
+
+  <link name="back_right_wheel_link">
+     <collision>
+      <origin xyz="0 0 0" rpy="1.57 0 0"/>
+        <geometry>
+         <cylinder length="0.229" radius="0.356"/>
+        </geometry>
+     </collision>
+
+     <visual>
+      <origin xyz="0 0 0" rpy="0 0 -1.57"/>
+        <geometry>
+          <mesh filename="package://ford/meshes/ford_escape_wheel.dae"/>
+      <scale xyz="1.2 1 1"/>
+        </geometry>
+      </visual>
+
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="40"/>
+        <inertia
+          ixx="54"  ixy="0.000000"  ixz="0.000000"
+          iyy="56"  iyz="0.000000"
+          izz="104"/>
+      </inertial>
+  </link>
+
+
+<!-- Back Left Wheel -->
+<!-- --------------- -->
+
+  <joint name="back_left_wheel_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="back_left_wheel_link"/>
+      <origin xyz="-1.31 0.765 0.66" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <dynamics damping="0.1"/>
+      <limit effort="10000" velocity="100" />
+      <joint_properties damping="0.0" friction="0.0" />
+  </joint>
+
+  <link name="back_left_wheel_link">
+     <collision>
+      <origin xyz="0 0 0" rpy="1.57 0 0"/>
+        <geometry>
+         <cylinder length="0.229" radius="0.356"/>
+        </geometry>
+     </collision>
+
+     <visual>
+      <origin xyz="0 0 0" rpy="0 0 1.57"/>
+        <geometry>
+          <mesh filename="package://ford/meshes/ford_escape_wheel.dae"/>
+          <scale xyz="1.2 1 1"/>
+        </geometry>
+      </visual>
+
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="40"/>
+        <inertia
+          ixx="54"  ixy="0.000000"  ixz="0.000000"
+          iyy="56"  iyz="0.000000"
+          izz="104"/>
+      </inertial>
+  </link>
+
+
+
+<!-- Front Right Wheel -->
+<!-- ----------------- -->
+
+  <joint name="front_right_wheel_joint" type="fixed">
+      <parent link="front_right_steering_link"/>
+      <child link="front_right_wheel_link"/>
+      <origin xyz="0 -0.1195 0" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+  </joint>
+
+  <link name="front_right_wheel_link">
+     <collision>
+      <origin xyz="0 0 0" rpy="1.57 0 0"/>
+        <geometry>
+         <cylinder length="0.229" radius="0.356"/>
+	</geometry>
+     </collision>
+
+     <visual>
+      <origin xyz="0 0 0" rpy="0 0 -1.57"/>
+        <geometry>
+          <mesh filename="package://ford/meshes/ford_escape_wheel.dae"/>
+        <scale xyz="1.2 1 1"/>
+       </geometry>  
+      </visual>
+
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="40"/>
+        <inertia
+          ixx="54"  ixy="0.000000"  ixz="0.000000"
+          iyy="56"  iyz="0.000000"
+          izz="104"/>
+      </inertial>
+ </link>
+
+<transmission name="front_right_wheel_transmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="front_right_wheel_joint">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="front_right_wheel_joint">
+        <mechanicalReduction>7</mechanicalReduction>
+        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      </actuator>
+</transmission>
+
+<!-- Front Left Wheel -->
+<!-- ---------------- -->
+
+  <joint name="front_left_wheel_joint" type="fixed">
+      <parent link="front_left_steering_link"/>
+      <child link="front_left_wheel_link"/>
+      <origin xyz="0 0.1195 0" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+
+      <dynamics damping="0.1"/>
+      <limit effort="10000" velocity="100" />
+      <joint_properties damping="0.0" friction="0.0" />
+
+  </joint>
+
+
+  <link name="front_left_wheel_link">
+     <parent link="front_left_wheel_joint"/>
+     <collision>     
+	<origin xyz="0 0 0" rpy="1.57 0 0"/>
+        <geometry>
+         <cylinder length="0.229" radius="0.356"/>
+        </geometry>
+     </collision>
+
+     <visual>
+      <origin xyz="0 0 0" rpy="0 0 1.57"/>
+       <geometry>
+          <mesh filename="package://ford/meshes/ford_escape_wheel.dae"/>
+            <scale xyz="1.2 1 1"/>
+       </geometry>
+      </visual>
+
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="40"/>
+        <inertia
+          ixx="54"  ixy="0.000000"  ixz="0.000000"
+          iyy="56"  iyz="0.000000"
+          izz="104"/>
+      </inertial>
+  </link>
+ 
+
+<transmission name="front_left_wheel_transmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="front_left_wheel_joint">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="front_left_wheel_joint">
+        <mechanicalReduction>7</mechanicalReduction>
+        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      </actuator>
+</transmission>
+
+<!-- Right Steering -->
+<!-- -------------- -->
+
+  <joint name="front_right_steering_joint" type="fixed">
+	<parent link="base_link"/>
+	<child link="front_right_steering_link"/>
+	<origin xyz="1.31 -0.7005 0.66" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+	<limit effort="1000.0" lower="-0.6" upper="0.6" velocity="0.5"/>
+  </joint>
+
+  <link name="front_right_steering_link">
+	<collision>
+	      <origin xyz="0 0 0" rpy="1.57 0 0"/>
+	        <geometry>
+        	 <cylinder length="0.01" radius="0.1"/>
+       		</geometry>
+	</collision>
+
+	<visual>
+              <origin xyz="0 0 0" rpy="1.57 0 0"/>
+                <geometry>
+                 <cylinder length="0.01" radius="0.1"/>
+                </geometry>
+	</visual>
+
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="10.00"/>
+        <inertia
+          ixx="0.4"  ixy="0.000000"  ixz="0.000000"
+          iyy="0.6"  iyz="0.000000"
+          izz="0.4"/>
+      </inertial>
+  </link>
+
+
+<!-- Left Steering -->
+<!-- ------------- -->
+
+  <joint name="front_left_steering_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="front_left_steering_link"/>
+        <origin xyz="1.31 0.6555 0.66" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <limit effort="1000.0" lower="-0.6" upper="0.6" velocity="0.5"/>
+  </joint>
+
+  <link name="front_left_steering_link">
+      <parent link="base_link"/>
+        <collision>
+              <origin xyz="0 0 0" rpy="1.57 0 0"/>
+                <geometry>
+                 <cylinder length="0.01" radius="0.1"/>
+                </geometry>
+        </collision>
+
+        <visual>
+              <origin xyz="0 0 0" rpy="1.57 0 0"/>
+                <geometry>
+                 <cylinder length="0.01" radius="0.1"/>
+                </geometry>
+        </visual>
+
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="10.00"/>
+        <inertia
+          ixx="0.4"  ixy="0.000000"  ixz="0.000000"
+          iyy="0.6"  iyz="0.000000"
+          izz="0.4"/>
+      </inertial>
+  </link>
+
+
+<!-- Sensors -->
+<!-- ------- -->
+ 
+ <link name="front_camera_link">
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+
+  <joint name="front_camera_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="front_camera_link"/>
+    <origin xyz="1.5 0 1.4" rpy="0 0.00 0"/>
+ </joint>
+
+ <gazebo reference="front_camera_link">
+    <sensor type="camera" name="front_camera_sensor">
+      <update_rate>30.0</update_rate>
+
+      <camera name="front_camera">
+        <horizontal_fov>1.3962634</horizontal_fov>
+        <image>
+          <width>1920</width>
+          <height>1080</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.02</near>
+          <far>300</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+
+      <plugin name="front_camera_controller" filename="libgazebo_ros_camera.so">
+        <alwaysOn>false</alwaysOn>
+        <updateRate>0.0</updateRate>
+        <cameraName>/ford/front_camera</cameraName>
+        <imageTopicName>image_raw</imageTopicName>
+        <cameraInfoTopicName>front_camera_info</cameraInfoTopicName>
+        <frameName>camera_link</frameName>
+        <hackBaseline>0.07</hackBaseline>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+      </plugin>
+
+    </sensor>
+ </gazebo>
+
+
+<!-- Driving -->
+<!-- ------- -->
+
+<gazebo>
+    <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+      <commandTopic>/ford/cmd_vel</commandTopic>
+      <odometryTopic>/ford/odom</odometryTopic>
+      <odometryFrame>/ford/odom</odometryFrame>
+      <odometryRate>20.0</odometryRate>
+      <robotBaseFrame>base_link</robotBaseFrame>
+    </plugin>
+  </gazebo>
+
+</robot>

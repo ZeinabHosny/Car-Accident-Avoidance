@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<launch>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+     <arg name="world_name" value="$(find ford)/worlds/test.world"/>
+   	 <arg name="paused" default="true"/>
+     <arg name="use_sim_time" default="true"/>
+     <arg name="gui" default="true"/>
+ </include>
+
+        <!-- Spawn Prius car into Gazebo -->
+  <node name="prius_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+     args="-file $(find prius)/urdf/prius.urdf -urdf -model prius -x 402 -y 332 -z 0 -R 0 -P 0 -Y 0 " />
+
+
+       <!-- Spawn Ford car into Gazebo -->
+  <node name="ford_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+     args="-file $(find ford)/urdf/ford.urdf -urdf -model ford -x 10 -y 5 -z 0 -R 0 -P 0 -Y 1.6 " />
+
+</launch>

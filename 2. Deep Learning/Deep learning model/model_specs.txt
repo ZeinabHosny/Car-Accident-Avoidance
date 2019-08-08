@@ -1,0 +1,5 @@
+number of epochs=25
+Dropout keep probability=0.5
+number of FC neurons=1024
+using new kernels numbers in convolution layers.
+training accuracy is above 90%
