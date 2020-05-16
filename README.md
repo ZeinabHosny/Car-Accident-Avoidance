@@ -6,3 +6,7 @@
 • Phase 2: Accident detection through a deep learning computer vision based model.
 
 • Phase 3: Sending the data through IoT using V2V on GNU Radio and USRP.
+
+#### Project Video: https://youtu.be/xQSFynX9jiY
+#### The project paper was accepted at the IEEE International Conference on Microelectronics (ICM 2019) entitled by “End-to-End Crash Avoidance DeepIoT-based Solution”.
+#### Paper URL: https://ieeexplore.ieee.org/document/9021613.
